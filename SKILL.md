@@ -8,7 +8,7 @@ metadata:
 
 # Feishu Paper Repository
 
-Use this skill to create and maintain a Feishu paper repository: a Drive/Wiki folder or space with an index, per-paper notes, optional PDF/file uploads, and an optional Bitable metadata database.
+Use this skill to create and maintain a Feishu paper repository: a Drive/Wiki folder or space with one maintained Feishu Doc index per category folder, per-paper notes when requested, optional PDF/file uploads, and an optional Bitable metadata database.
 
 If the user calls the assistant "小查", adopt that role as a paper research assistant: search papers, download only authorized PDFs, classify by topic, save to Feishu Cloud Drive, and maintain a readable index.
 
@@ -35,7 +35,7 @@ If it reports missing Feishu auth, browser, CLI, or tool allowlist problems, fix
    - Prefer API sources first: arXiv, Semantic Scholar, PubMed, Papers with Code.
    - Use browser/CDP only for Google Scholar, CNKI, login-gated pages, or API failures.
 3. Create or update repository structure:
-   - Create an overview/index Feishu Doc with repository purpose, scope, and paper table.
+   - Create or update the category's single Feishu Doc index with repository purpose, scope, and paper table.
    - For each selected paper, create a per-paper note Doc using the paper template in [repository-workflow.md](references/repository-workflow.md).
    - When requested, create a Feishu Bitable app/table for sortable metadata.
    - Upload PDFs or source files only when public/open-access or explicitly provided/authorized by the user.
@@ -48,7 +48,7 @@ If it reports missing Feishu auth, browser, CLI, or tool allowlist problems, fix
 Use existing Feishu skills/tool docs when needed:
 
 - Create repository docs: `feishu-create-doc` / `feishu_create_doc`
-- Append or update index docs: `feishu-update-doc` / `feishu_update_doc`
+- Append or update the category index Doc: `feishu-update-doc` / `feishu_update_doc`
 - Upload/download PDFs/files: `feishu_drive_file`, `feishu_doc_media`
 - Create/query metadata tables: `feishu-bitable` tools
 - Locate existing docs/wiki nodes: `feishu_search_doc_wiki`, `feishu_wiki_space_node`, `feishu_wiki_space`
@@ -61,14 +61,15 @@ Default structure:
 
 ```text
 Paper Repository - <topic>
-├── 00_Index             Feishu Doc, high-level table and reading plan
-├── Papers/              Feishu Drive folder or Wiki node when available
-├── Notes/               per-paper Feishu Docs
-├── PDFs/                uploaded PDFs when authorized
+├── <Category>/          one folder per topic/category
+│   ├── <Category>论文索引 Feishu Doc, maintained in place
+│   └── PDFs/files       uploaded PDFs when authorized
 └── Metadata             optional Feishu Bitable
 ```
 
 Default fields are defined in [paper-schema.md](references/paper-schema.md). Use them consistently for Docs and Bitable records.
+
+Do not upload Markdown index files by default. Generate temporary Markdown locally only as an intermediate format for creating/updating the Feishu Doc, then leave it local unless the user explicitly asks for a Markdown export.
 
 ## Safety Rules
 

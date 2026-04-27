@@ -7,7 +7,7 @@ It supports the "小查" paper research assistant workflow:
 - Search journal, conference, and preprint papers.
 - Normalize paper metadata from academic-search style workflows.
 - Download only authorized/open-access PDFs.
-- Upload PDFs, Markdown indexes, Feishu Docs, and optional Bitable metadata to Feishu Cloud Drive.
+- Upload PDFs, maintain one Feishu Doc index per category folder, and optionally maintain Bitable metadata.
 - Check prerequisites for `lark-cli`, OpenClaw Lark plugin permissions, Feishu tool allowlists, and browser/Chrome configuration.
 
 ## Install
@@ -51,5 +51,6 @@ screening, multi-source metadata normalization, PDF discovery, and fallback
 browser/CDP workflows for sources such as Google Scholar and CNKI.
 
 `feishu-paper-repository` adds the Feishu/OpenClaw repository layer on top:
-permission checks, `lark-cli` setup, Feishu Drive upload/move workflows, index
-Doc creation, optional Bitable metadata, and paper-library organization.
+permission checks, `lark-cli` setup, Feishu Drive upload/move workflows,
+single-index Doc maintenance, optional Bitable metadata, and paper-library
+organization.

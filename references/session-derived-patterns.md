@@ -60,9 +60,15 @@ The completed repository output included:
 - A main `论文仓库` folder.
 - A category folder such as `人工智能与机器学习`.
 - Ten selected PDF files uploaded to the category folder.
-- A Markdown index file named like `README_论文索引.md`.
 - A Feishu Doc index created from Markdown and moved into the same folder.
+- A Markdown index file was uploaded in the prior run, but this is no longer the default policy.
 - A final report containing search scope, platforms, query terms, candidate count, selected count, Feishu locations, and local cache paths.
+
+Current index policy:
+
+- Keep exactly one maintained index cloud document per category folder.
+- On later uploads to the same category, update that existing cloud document.
+- Do not upload `README_论文索引.md` or any other Markdown index file unless the user explicitly asks for a Markdown export.
 
 ## CLI Command Pitfalls
 

@@ -16,7 +16,8 @@ If the user gives only a broad request such as "搜索 2024 年以来大模型�
 - Search first, then filter by venue, citation, recency, and topic fit.
 - Save a full candidate list locally.
 - Download only the selected/top papers.
-- Upload PDFs and an index to the appropriate Feishu category folder.
+- Upload PDFs to the appropriate Feishu category folder.
+- Create or update the category's existing Feishu Doc index.
 
 Default category folders:
 
@@ -25,14 +26,19 @@ Default category folders:
 - Medicine and clinical topics: `论文仓库/医学与临床/`
 - Other topics: create a topic-specific subfolder after confirming name/access.
 
-## 2. Create Index Document
+## 2. Maintain One Category Index Document
 
-Use `feishu_create_doc`.
+Each Feishu category folder must have at most one maintained paper index Doc for that category. Before creating a new index:
+
+1. Search the target folder/wiki node for an existing index Doc using title patterns such as `<Category>论文索引`, `论文索引`, `Paper Index`, or the category name plus `index`.
+2. If an index Doc exists, fetch it and update/append only the newly added papers.
+3. If no index Doc exists, create one with `feishu_create_doc` or `lark-cli docs +create`, then move it into the category folder if needed.
+4. Do not create a second index for the same category unless the user explicitly asks for a separate archive or snapshot.
 
 Recommended title:
 
 ```text
-Paper Repository - <topic>
+<Category>论文索引
 ```
 
 Recommended index sections:
@@ -57,6 +63,8 @@ Scope, date created, owner, and update policy.
 ```
 
 Do not put the same H1 title in the Markdown body; Feishu Doc title is separate.
+
+Markdown files are intermediate artifacts only. Do not upload `README_论文索引.md` or other Markdown index files to Feishu by default. Upload a Markdown export only when the user explicitly asks for an exported/source index.
 
 ## 3. Create Per-Paper Notes
 
@@ -134,17 +142,28 @@ lark-cli drive +upload --file "<local-file>" --folder-token "<folder_token>"
 lark-cli drive +move --file-token "<doc_or_file_token>" --type docx --folder-token "<folder_token>"
 ```
 
+For index Docs, use the existing category index if present. If creating the first one:
+
+```bash
+lark-cli docs +create --title "<Category>论文索引" --markdown "<temporary-markdown-file>"
+lark-cli drive +move --file-token "<doc_token>" --type docx --folder-token "<folder_token>"
+```
+
+Delete or leave the temporary Markdown file locally; do not upload it as a Drive file unless requested.
+
 Do not use `lark-cli drive files list --folder-token`; prior sessions showed this command rejects `--folder-token`. Use `lark-cli drive +move --help`, `lark-cli drive +upload --help`, or OpenClaw `feishu_drive_file` metadata/list actions to discover the correct command shape.
 
 ## 6. Update Existing Repository
 
 When updating:
 
-1. Fetch the index Doc or Bitable records.
-2. Normalize new candidate papers.
-3. Deduplicate by DOI, arXiv ID, PMID, Semantic Scholar ID, then normalized title.
-4. Append only new papers.
-5. Add a change log entry with date, query/source, and count added/skipped.
+1. Locate the category folder and its single index Doc.
+2. Fetch the index Doc or Bitable records.
+3. Normalize new candidate papers.
+4. Deduplicate by DOI, arXiv ID, PMID, Semantic Scholar ID, then normalized title.
+5. Append only new papers to the existing index Doc.
+6. Add a change log entry with date, query/source, and count added/skipped.
+7. Do not upload a new index file.
 
 ## 7. Final Report
 
@@ -161,5 +180,5 @@ For paper-search repository tasks, include:
 - Search scope and platforms.
 - Query variants used.
 - Total candidates found and selected papers uploaded.
-- Feishu folder/doc URLs.
+- Feishu folder URL and the single maintained category index Doc URL.
 - Local cache paths if temporary PDFs or metadata were produced.
