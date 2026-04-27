@@ -41,3 +41,15 @@ bash "$HOME/.openclaw/workspace/skills/feishu-paper-repository/scripts/check-pre
 - Chrome/Chromium for browser-backed academic search fallbacks
 
 See `references/prerequisites.md` for full setup details.
+
+## Related Work
+
+This skill builds on the search strategy patterns from
+[`ustc-ai4science/academic-search`](https://github.com/ustc-ai4science/academic-search),
+including API-first paper discovery, query expansion, lightweight first-pass
+screening, multi-source metadata normalization, PDF discovery, and fallback
+browser/CDP workflows for sources such as Google Scholar and CNKI.
+
+`feishu-paper-repository` adds the Feishu/OpenClaw repository layer on top:
+permission checks, `lark-cli` setup, Feishu Drive upload/move workflows, index
+Doc creation, optional Bitable metadata, and paper-library organization.
